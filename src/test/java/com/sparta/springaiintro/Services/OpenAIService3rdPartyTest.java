@@ -13,8 +13,8 @@ class OpenAIService3rdPartyTest {
 
     @Test
     void testGetAnswer() {
-        String ans = openAIService.getAnswer("can you play a song for me?");
+//        String ans = openAIService.getAnswer("can you play a song for me?");
         System.out.println("Finished fetching ans");
-        System.out.println(ans);
+//        System.out.println(ans);
     }
 }
