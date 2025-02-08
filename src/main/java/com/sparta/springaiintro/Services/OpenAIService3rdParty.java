@@ -43,9 +43,18 @@ public class OpenAIService3rdParty implements OpenAIService{
     private Resource getCapitalPrompt;
     @Override
     public Answer getCapital(GetCapitalRequest getcapitalRequest) {
-//        PromptTemplate promptTemplate = new PromptTemplate("What is the capital of "+ getcapitalRequest.stateOrCountry()+" ?");
         PromptTemplate promptTemplate = new PromptTemplate(getCapitalPrompt);
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", getcapitalRequest.stateOrCountry()));
+        ChatResponse chatResponse = chatModel.call(prompt);
+        return new Answer(chatResponse.getResult().getOutput().getContent());
+    }
+
+    @Value("classpath:templates/get-capital-with-info-prompt.st")
+    private Resource getCapitalWithInfoPrompt;
+    @Override
+    public Answer getCapitalWithInfo(GetCapitalRequest getCapitalRequest) {
+        PromptTemplate promptTemplate = new PromptTemplate((getCapitalWithInfoPrompt));
+        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", getCapitalRequest.stateOrCountry()));
         ChatResponse chatResponse = chatModel.call(prompt);
         return new Answer(chatResponse.getResult().getOutput().getContent());
     }
